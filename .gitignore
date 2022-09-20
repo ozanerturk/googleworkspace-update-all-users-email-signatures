@@ -4,4 +4,5 @@ client_secret.json
 .env
 token.json
 backup_signatures
+new_signatures
 template.html

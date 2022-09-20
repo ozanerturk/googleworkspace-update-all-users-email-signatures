@@ -18,7 +18,7 @@ mail_template_file = config['template']
 oAuthCredentials_file = config['client_secret_file']
 service_account_file = config['service_account_file']
 backup_signatures_folder = "backup_signatures"
-
+new_signatures_folder="new_signatures"
 mail_template = open(mail_template_file, "r").read()
 
 
@@ -61,6 +61,14 @@ def updateSignature(email, fullName, title):
         template = mail_template.replace("#=name#", fullName)\
                                 .replace("#=email#", email)\
                                 .replace("#=title#", title)
+         # mkdir
+        if not os.path.exists(new_signatures_folder):
+            os.mkdir(new_signatures_folder)
+        # write file
+        #write signature to file named with email
+        with open(f"{new_signatures_folder}/{email}.html", "w") as f:
+            f.write(template)
+                    
         send_as_configuration = {
             'displayName': primary_alias.get('sendAsEmail'),
             'signature': template
@@ -107,13 +115,13 @@ if __name__ == '__main__':
     credentials = ensure_creds()
     service = build('admin', 'directory_v1', credentials=credentials)
     results = service.users().list(domain=domain, maxResults=300,orderBy='email').execute()
-    for user in results['users']:
+    users_with_title = [ user for user in results['users'] if 'organizations' in user ]
+    # print(users_with_title)
+    for user in users_with_title:
         fullName=user['name']['fullName']
         email = user['primaryEmail']
-        title =''
-        if 'organizations' in user:
-            title = user['organizations'][0]['title']
-        print(fullName,email,title)
-        if(email == config['testUser']): ##remove this line when you are ready to update all users signatures
-            print("updating signature for",email)
-            updateSignature(email,fullName,title)
+        title = user['organizations'][0]['title']
+        #print(fullName,email,title)
+        #if(email == config['testUser']): ##remove this line when you are ready to update all users signatures
+        #   print("updating signature for",email)
+        updateSignature(email,fullName,title)
