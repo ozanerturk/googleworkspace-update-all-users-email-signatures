@@ -115,8 +115,9 @@ if __name__ == '__main__':
     credentials = ensure_creds()
     service = build('admin', 'directory_v1', credentials=credentials)
     results = service.users().list(domain=domain, maxResults=300,orderBy='email').execute()
+    #I am filtering users with title  
     users_with_title = [ user for user in results['users'] if 'organizations' in user ]
-    # print(users_with_title)
+
     for user in users_with_title:
         fullName=user['name']['fullName']
         email = user['primaryEmail']
