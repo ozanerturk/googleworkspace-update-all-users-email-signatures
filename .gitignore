@@ -1,0 +1,7 @@
+venv
+service_account_credentials.json
+client_secret.json
+.env
+token.json
+backup_signatures
+template.html
