@@ -121,7 +121,7 @@ if __name__ == '__main__':
         fullName=user['name']['fullName']
         email = user['primaryEmail']
         title = user['organizations'][0]['title']
-        #print(fullName,email,title)
-        #if(email == config['testUser']): ##remove this line when you are ready to update all users signatures
-        #   print("updating signature for",email)
-        updateSignature(email,fullName,title)
+        print(fullName,email,title)
+        if(email == config['testUser']): ##remove this line when you are ready to update all users signatures
+          print("updating signature for",email)
+          updateSignature(email,fullName,title)
