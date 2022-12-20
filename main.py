@@ -14,7 +14,7 @@ config = {
 
 
 domain = config['domain']
-mail_template_file = config['template']
+mail_template_file = "template2.html"
 oAuthCredentials_file = config['client_secret_file']
 service_account_file = config['service_account_file']
 backup_signatures_folder = "backup_signatures"
@@ -123,6 +123,6 @@ if __name__ == '__main__':
         email = user['primaryEmail']
         title = user['organizations'][0]['title']
         print(fullName,email,title)
-        if(email == config['testUser']): ##remove this line when you are ready to update all users signatures
-          print("updating signature for",email)
-          updateSignature(email,fullName,title)
+        # if(email == config['testUser']): ##remove this line when you are ready to update all users signatures
+        # print("updating signature for",email)
+        updateSignature(email,fullName,title)
